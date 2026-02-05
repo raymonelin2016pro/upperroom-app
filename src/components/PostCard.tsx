@@ -55,7 +55,7 @@ export default function PostCard({ post, onDelete, currentUserId: propUserId, is
         .from('likes')
         .select('*')
         .eq('post_id', post.id)
-        .eq('user_id', user.id)
+        .eq('user_id', userId)
         .single()
       
       setIsLiked(!!data)
