@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export const POST_TAGS = [
   '团契',
   '生日会',
-  '敬拜',
+  '音乐',
   '户外活动',
   '其他'
 ] as const;

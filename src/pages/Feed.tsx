@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { Plus, User, Tag } from 'lucide-react'
+import { Plus, User, Sparkles } from 'lucide-react'
 import { POST_TAGS } from '../lib/utils'
 import PostCard from '../components/PostCard'
 import WeeklyTheme from '../components/WeeklyTheme'
@@ -83,14 +83,25 @@ export default function Feed() {
       {/* Header */}
       <div className="flex justify-between items-center mb-6 sticky top-0 bg-white/95 backdrop-blur-md z-20 py-4 border-b border-gray-50">
         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 font-sans">Moment</h1>
-        <button 
-          onClick={() => navigate('/profile')} 
-          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-        >
-          <div className="h-8 w-8 rounded-full bg-gray-900 text-white flex items-center justify-center">
-            <User className="h-4 w-4" />
-          </div>
-        </button>
+        <div className="flex items-center gap-2">
+          <button 
+            onClick={() => navigate('/icebreaker')} 
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+            title="破冰抽卡"
+          >
+            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center">
+              <Sparkles className="h-4 w-4" />
+            </div>
+          </button>
+          <button 
+            onClick={() => navigate('/profile')} 
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+          >
+            <div className="h-8 w-8 rounded-full bg-gray-900 text-white flex items-center justify-center">
+              <User className="h-4 w-4" />
+            </div>
+          </button>
+        </div>
       </div>
 
       <WeeklyTheme />

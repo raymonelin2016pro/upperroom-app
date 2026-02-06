@@ -6,6 +6,7 @@ import Feed from './pages/Feed'
 import CreatePost from './pages/CreatePost'
 import Profile from './pages/Profile'
 import PostDetail from './pages/PostDetail'
+import Icebreaker from './pages/Icebreaker'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any>(null)
@@ -73,6 +74,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/icebreaker"
+            element={
+              <PrivateRoute>
+                <Icebreaker />
               </PrivateRoute>
             }
           />
