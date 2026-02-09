@@ -1,0 +1,76 @@
+{
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "login": {
+    "welcome_back": "Welcome Back",
+    "join_us": "Join Us",
+    "invitation": "Invitation",
+    "share_moments": "Share Your Moments",
+    "email": "Email",
+    "password": "Password",
+    "invitation_code": "Invitation Code",
+    "enter": "Enter",
+    "verifying": "Verifying...",
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "no_account": "Don't have an account? Sign up",
+    "has_account": "Already have an account? Sign in",
+    "processing": "Processing..."
+  },
+  "feed": {
+    "title": "Moment",
+    "create_post": "Create Post",
+    "all": "All",
+    "no_posts_in": "No posts in #{{tag}}",
+    "no_moments": "No moments yet",
+    "try_another": "Try selecting another tag or create a new post.",
+    "be_first": "Be the first to share a photo with your friends."
+  },
+  "weekly_theme": {
+    "title": "Weekly Verse / Theme",
+    "placeholder": "Enter this week's verse or theme...",
+    "no_theme": "No theme set for this week",
+    "update": "Update",
+    "cancel": "Cancel"
+  },
+  "post_card": {
+    "delete_title": "Delete Post",
+    "delete_confirm": "Are you sure you want to delete this post? This action cannot be undone.",
+    "delete": "Delete",
+    "like": "Like",
+    "unknown_user": "Unknown User"
+  },
+  "post_detail": {
+    "title": "Post Details",
+    "comments": "Comments",
+    "no_comments": "No comments yet. Be the first to share your thoughts!",
+    "add_comment": "Add a comment...",
+    "not_found": "Post not found",
+    "not_found_desc": "The post you are looking for does not exist or has been removed.",
+    "go_home": "Go back home"
+  },
+  "create_post": {
+    "title": "New Post",
+    "cancel": "Cancel",
+    "post": "Post",
+    "posting": "Posting...",
+    "error_file_type": "Please upload an image file",
+    "error_file_size": "Image size should be less than 5MB",
+    "upload_placeholder": "Click or drag image to upload",
+    "add_tag": "Add Tag (Optional)",
+    "caption_placeholder": "Write a caption..."
+  },
+  "profile": {
+    "sign_out": "Sign Out",
+    "joined": "Joined",
+    "cancel": "Cancel",
+    "save_changes": "Save Changes",
+    "my_posts": "My Posts",
+    "share_first": "Share your first moment",
+    "create_post": "Create Post",
+    "default_user": "User"
+  }
+}

@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 export default function Login() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
@@ -96,6 +99,11 @@ export default function Login() {
         }}
       />
       
+      {/* Language Switcher */}
+      <div className="absolute top-6 right-6 z-20">
+        <LanguageSwitcher className="bg-white/80 backdrop-blur-md shadow-sm hover:bg-white" />
+      </div>
+
       {/* Gradient Overlay for better text contrast */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-white/40 via-white/20 to-transparent backdrop-blur-[2px]" />
 
@@ -103,10 +111,10 @@ export default function Login() {
       <div className="max-w-md w-full space-y-8 bg-white/90 backdrop-blur-xl p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] z-10 border border-white/60 relative mx-4 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
         <div className="text-center space-y-2">
           <h2 className="text-3xl font-light text-gray-900 tracking-tight font-serif">
-            {needsActivation ? 'Invitation' : (isLogin ? 'Welcome Back' : 'Join Us')}
+            {needsActivation ? t('login.invitation') : (isLogin ? t('login.welcome_back') : t('login.join_us'))}
           </h2>
           <p className="text-xs text-gray-500 font-medium tracking-[0.2em] uppercase">
-            Share Your Moments
+            {t('login.share_moments')}
           </p>
         </div>
 
@@ -114,7 +122,7 @@ export default function Login() {
         {needsActivation ? (
           <div className="space-y-6 pt-4">
             <div className="space-y-2">
-              <label htmlFor="code" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider pl-1">Invitation Code</label>
+              <label htmlFor="code" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider pl-1">{t('login.invitation_code')}</label>
               <input
                 id="code"
                 value={invitationCode}
@@ -122,7 +130,7 @@ export default function Login() {
                 type="text"
                 required
                 className="appearance-none block w-full px-4 py-3.5 bg-gray-50/50 border border-gray-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-gray-300 focus:bg-white transition-all duration-200 text-sm placeholder-gray-400"
-                placeholder="Enter Invitation Code"
+                placeholder={t('login.invitation_code')}
               />
             </div>
             <button
@@ -136,9 +144,9 @@ export default function Login() {
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  Verifying...
+                  {t('login.verifying')}
                 </span>
-              ) : 'Enter'}
+              ) : t('login.enter')}
             </button>
           </div>
         ) : (
@@ -146,7 +154,7 @@ export default function Login() {
           <form className="mt-8 space-y-6" onSubmit={handleAuth}>
             <div className="space-y-5">
               <div className="space-y-2">
-                <label htmlFor="email-address" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider pl-1">Email</label>
+                <label htmlFor="email-address" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider pl-1">{t('login.email')}</label>
                 <input
                   id="email-address"
                   name="email"
@@ -160,7 +168,7 @@ export default function Login() {
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="password" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider pl-1">Password</label>
+                <label htmlFor="password" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider pl-1">{t('login.password')}</label>
                 <input
                   id="password"
                   name="password"
@@ -193,9 +201,9 @@ export default function Login() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Processing...
+                    {t('login.processing')}
                   </span>
-                ) : (isLogin ? 'Sign In' : 'Sign Up')}
+                ) : (isLogin ? t('login.sign_in') : t('login.sign_up'))}
               </button>
             </div>
 
@@ -205,7 +213,7 @@ export default function Login() {
                 className="text-xs font-medium text-gray-500 hover:text-gray-900 transition-all border-b border-transparent hover:border-gray-300 pb-0.5"
                 onClick={() => setIsLogin(!isLogin)}
               >
-                {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
+                {isLogin ? t('login.no_account') : t('login.has_account')}
               </button>
             </div>
           </form>

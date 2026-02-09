@@ -3,19 +3,7 @@ import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { ArrowLeft, RefreshCw } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const QUESTIONS = [
-  "最喜欢的水果是什么？",
-  "分享一个你最糗的经历。",
-  "分享一个你最感恩的时刻。",
-  "你期待的另一半是什么样的？",
-  "你最喜欢的运动是什么？",
-  "如果你能拥有超能力，你会选择什么？",
-  "最近一次让你开怀大笑的事情是什么？",
-  "你最想去旅游的地方是哪里？",
-  "分享一部你最喜欢的电影。",
-  "你童年最难忘的回忆是什么？"
-];
+import { ICEBREAKER_QUESTIONS } from '../constants/icebreakerQuestions';
 
 interface Card {
   id: number;
@@ -31,23 +19,21 @@ export default function Icebreaker() {
     initializeCards();
   }, []);
 
-  const initializeCards = () => {
-    const newCards = QUESTIONS.map((q, index) => ({
+  const pickNewCards = () => {
+    // Shuffle all questions and pick 16
+    const shuffledQuestions = [...ICEBREAKER_QUESTIONS]
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 16);
+
+    return shuffledQuestions.map((q, index) => ({
       id: index,
       question: q,
       isFlipped: false
     }));
-    // Shuffle the cards initially
-    setCards(shuffleArray(newCards));
   };
 
-  const shuffleArray = (array: Card[]) => {
-    const newArray = [...array];
-    for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-    }
-    return newArray;
+  const initializeCards = () => {
+    setCards(pickNewCards());
   };
 
   const handleCardClick = (id: number) => {
@@ -74,7 +60,7 @@ export default function Icebreaker() {
     
     // Then shuffle after a short delay for animation
     setTimeout(() => {
-      setCards(prev => shuffleArray(prev));
+      setCards(pickNewCards());
       setIsShuffling(false);
     }, 600);
   };
@@ -83,7 +69,7 @@ export default function Icebreaker() {
     <div className="min-h-screen bg-gray-50 p-4 pb-20">
       <header className="mb-6 flex items-center justify-between sticky top-0 bg-gray-50/80 backdrop-blur-sm z-10 py-2">
         <div className="flex items-center gap-2">
-            <Link to="/" className="p-2 hover:bg-gray-200 rounded-full transition-colors">
+            <Link to="/games" className="p-2 hover:bg-gray-200 rounded-full transition-colors">
                 <ArrowLeft className="w-6 h-6 text-gray-700" />
             </Link>
             <h1 className="text-2xl font-bold text-gray-800">破冰抽卡</h1>
@@ -98,7 +84,7 @@ export default function Icebreaker() {
         </button>
       </header>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
         {cards.map((card) => (
           <div key={card.id} className="h-48 perspective-1000">
             <motion.div

@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import { Home, LogOut, Camera, Edit2, X, Check } from 'lucide-react'
 
 export default function Profile() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [profile, setProfile] = useState<any>(null)
   const [posts, setPosts] = useState<any[]>([])
@@ -134,7 +135,7 @@ export default function Profile() {
         </button>
         <button onClick={signOut} className="text-red-500 hover:text-red-700 flex items-center text-sm font-medium transition-colors">
           <LogOut className="h-5 w-5 mr-1" />
-          Sign Out
+          {t('profile.sign_out')}
         </button>
       </div>
 
@@ -181,58 +182,58 @@ export default function Profile() {
               />
             </div>
           ) : (
-            <div className="flex items-center space-x-3 mb-2">
-              <h2 className="text-2xl font-bold text-gray-900">{profile?.username || 'User'}</h2>
-              <button onClick={() => setIsEditing(true)} className="text-gray-400 hover:text-black transition-colors">
-                <Edit2 className="h-4 w-4" />
-              </button>
-            </div>
-          )}
+              <div className="flex items-center space-x-3 mb-2">
+                <h2 className="text-2xl font-bold text-gray-900">{profile?.username || t('profile.default_user')}</h2>
+                <button onClick={() => setIsEditing(true)} className="text-gray-400 hover:text-black transition-colors">
+                  <Edit2 className="h-4 w-4" />
+                </button>
+              </div>
+            )}
 
-          <p className="text-sm text-gray-500 font-medium">Joined {new Date(profile?.created_at || Date.now()).toLocaleDateString()}</p>
+            <p className="text-sm text-gray-500 font-medium">{t('profile.joined')} {new Date(profile?.created_at || Date.now()).toLocaleDateString()}</p>
 
-          {isEditing && (
-            <div className="flex items-center space-x-4 mt-6">
-              <button 
-                onClick={() => {
-                  setIsEditing(false)
-                  setAvatarPreview(null)
-                  setAvatarFile(null)
-                  setEditUsername(profile?.username || '')
-                }}
-                className="flex items-center px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors text-sm font-medium"
-              >
-                <X className="h-4 w-4 mr-1" /> Cancel
-              </button>
-              <button 
-                onClick={saveProfile}
-                disabled={saving}
-                className="flex items-center px-4 py-2 rounded-full bg-black text-white hover:bg-gray-800 transition-colors text-sm font-medium disabled:opacity-50"
-              >
-                {saving ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                ) : (
-                  <Check className="h-4 w-4 mr-1" />
-                )}
-                Save Changes
-              </button>
-            </div>
-          )}
+            {isEditing && (
+              <div className="flex items-center space-x-4 mt-6">
+                <button 
+                  onClick={() => {
+                    setIsEditing(false)
+                    setAvatarPreview(null)
+                    setAvatarFile(null)
+                    setEditUsername(profile?.username || '')
+                  }}
+                  className="flex items-center px-4 py-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors text-sm font-medium"
+                >
+                  <X className="h-4 w-4 mr-1" /> {t('profile.cancel')}
+                </button>
+                <button 
+                  onClick={saveProfile}
+                  disabled={saving}
+                  className="flex items-center px-4 py-2 rounded-full bg-black text-white hover:bg-gray-800 transition-colors text-sm font-medium disabled:opacity-50"
+                >
+                  {saving ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  ) : (
+                    <Check className="h-4 w-4 mr-1" />
+                  )}
+                  {t('profile.save_changes')}
+                </button>
+              </div>
+            )}
         </div>
 
         {/* My Posts Grid */}
         <div className="border-t border-gray-100 pt-12">
           <div className="flex items-center justify-center mb-8">
             <h3 className="text-xs font-bold text-gray-900 uppercase tracking-widest border-b-2 border-black pb-1">
-              My Posts <span className="text-gray-400 ml-1">{posts.length}</span>
+              {t('profile.my_posts')} <span className="text-gray-400 ml-1">{posts.length}</span>
             </h3>
           </div>
           
           {posts.length === 0 ? (
             <div className="text-center py-20 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
-              <p className="text-gray-400 text-sm font-medium">Share your first moment</p>
+              <p className="text-gray-400 text-sm font-medium">{t('profile.share_first')}</p>
               <button onClick={() => navigate('/create')} className="mt-4 text-black text-sm font-bold hover:underline">
-                Create Post
+                {t('profile.create_post')}
               </button>
             </div>
           ) : (

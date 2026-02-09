@@ -1,0 +1,76 @@
+{
+  "common": {
+    "language": "语言",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "login": {
+    "welcome_back": "欢迎回来",
+    "join_us": "加入我们",
+    "invitation": "邀请函",
+    "share_moments": "分享你的精彩瞬间",
+    "email": "邮箱",
+    "password": "密码",
+    "invitation_code": "邀请码",
+    "enter": "进入",
+    "verifying": "验证中...",
+    "sign_in": "登录",
+    "sign_up": "注册",
+    "no_account": "还没有账号？去注册",
+    "has_account": "已有账号？去登录",
+    "processing": "处理中..."
+  },
+  "feed": {
+    "title": "美好时刻",
+    "create_post": "发布动态",
+    "all": "全部",
+    "no_posts_in": "暂无 #{{tag}} 标签下的动态",
+    "no_moments": "暂无动态",
+    "try_another": "试试选择其他标签或发布新动态。",
+    "be_first": "成为第一个分享照片的人吧。"
+  },
+  "weekly_theme": {
+    "title": "每周经文 / 主题",
+    "placeholder": "输入本周经文或主题...",
+    "no_theme": "本周暂无主题",
+    "update": "更新",
+    "cancel": "取消"
+  },
+  "post_card": {
+    "delete_title": "删除动态",
+    "delete_confirm": "确定要删除这条动态吗？此操作无法撤销。",
+    "delete": "删除",
+    "like": "赞",
+    "unknown_user": "未知用户"
+  },
+  "post_detail": {
+    "title": "动态详情",
+    "comments": "评论",
+    "no_comments": "暂无评论，快来抢沙发吧！",
+    "add_comment": "添加评论...",
+    "not_found": "动态未找到",
+    "not_found_desc": "您查看的动态不存在或已被删除。",
+    "go_home": "返回首页"
+  },
+  "create_post": {
+    "title": "发布新动态",
+    "cancel": "取消",
+    "post": "发布",
+    "posting": "发布中...",
+    "error_file_type": "请上传图片文件",
+    "error_file_size": "图片大小不能超过 5MB",
+    "upload_placeholder": "点击或拖拽上传图片",
+    "add_tag": "添加标签（可选）",
+    "caption_placeholder": "写点什么..."
+  },
+  "profile": {
+    "sign_out": "退出登录",
+    "joined": "加入时间",
+    "cancel": "取消",
+    "save_changes": "保存修改",
+    "my_posts": "我的动态",
+    "share_first": "分享你的第一个瞬间",
+    "create_post": "发布动态",
+    "default_user": "用户"
+  }
+}

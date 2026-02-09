@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import { Image as ImageIcon, X, Tag } from 'lucide-react'
 import { POST_TAGS } from '../lib/utils'
 
 export default function CreatePost() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File | null>(null)
@@ -29,11 +31,11 @@ export default function CreatePost() {
 
   const validateAndSetFile = (f: File) => {
     if (!f.type.startsWith('image/')) {
-      setErrorMsg('Please upload an image file')
+      setErrorMsg(t('create_post.error_file_type'))
       return
     }
     if (f.size > 5 * 1024 * 1024) { // 5MB
-      setErrorMsg('Image size should be less than 5MB')
+      setErrorMsg(t('create_post.error_file_size'))
       return
     }
     
@@ -90,14 +92,14 @@ export default function CreatePost() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
-        <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-black">Cancel</button>
-        <h1 className="text-lg font-bold">New Post</h1>
+        <button onClick={() => navigate(-1)} className="text-gray-500 hover:text-black">{t('create_post.cancel')}</button>
+        <h1 className="text-lg font-bold">{t('create_post.title')}</h1>
         <button 
           onClick={publish} 
           disabled={!file || loading}
           className="bg-black text-white px-4 py-2 rounded-full text-sm font-medium disabled:opacity-50 hover:bg-gray-800"
         >
-          {loading ? 'Posting...' : 'Post'}
+          {loading ? t('create_post.posting') : t('create_post.post')}
         </button>
       </div>
 
@@ -116,7 +118,7 @@ export default function CreatePost() {
           onDrop={handleDrop}
         >
           <ImageIcon className="h-12 w-12 mb-4" />
-          <p className="text-sm">Click or drag image to upload</p>
+          <p className="text-sm">{t('create_post.upload_placeholder')}</p>
           <input 
             ref={fileInputRef}
             type="file" 
@@ -141,7 +143,7 @@ export default function CreatePost() {
       <div className="mb-6">
         <div className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-3">
           <Tag className="h-4 w-4" />
-          <span>Add Tag (Optional)</span>
+          <span>{t('create_post.add_tag')}</span>
         </div>
         <div className="flex flex-wrap gap-2">
           {POST_TAGS.map((tag) => (
@@ -168,7 +170,7 @@ export default function CreatePost() {
           rows={4}
           maxLength={200}
           className="w-full border-none focus:ring-0 p-0 text-lg placeholder-gray-400 resize-none bg-transparent outline-none"
-          placeholder="Write a caption..."
+          placeholder={t('create_post.caption_placeholder')}
         ></textarea>
         <div className="text-right text-xs text-gray-400 mt-2">
           {caption.length}/200

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Heart, Trash2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import { useNavigate } from 'react-router-dom'
 import { ConfirmModal } from './ConfirmModal'
@@ -12,6 +13,7 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post, onDelete, currentUserId: propUserId, isAdmin = false }: PostCardProps) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [likes, setLikes] = useState(0)
   const [isLiked, setIsLiked] = useState(false)
@@ -178,7 +180,7 @@ export default function PostCard({ post, onDelete, currentUserId: propUserId, is
             </div>
             <div>
               <h3 className="text-sm font-bold text-gray-900 leading-none mb-1">
-                {post.profiles?.username || 'Unknown User'}
+                {post.profiles?.username || t('post_card.unknown_user')}
               </h3>
               <div className="flex items-center space-x-2">
                 <p className="text-xs text-gray-400">
@@ -198,7 +200,7 @@ export default function PostCard({ post, onDelete, currentUserId: propUserId, is
             <button
               onClick={handleDelete}
               className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
-              title="Delete post"
+              title={t('post_card.delete_title')}
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -219,7 +221,7 @@ export default function PostCard({ post, onDelete, currentUserId: propUserId, is
             }`}
           >
             <Heart className={`h-5 w-5 ${isLiked ? 'fill-current' : ''}`} />
-            <span>{likes > 0 ? likes : 'Like'}</span>
+            <span>{likes > 0 ? likes : t('post_card.like')}</span>
           </button>
         </div>
       </div>
@@ -227,9 +229,9 @@ export default function PostCard({ post, onDelete, currentUserId: propUserId, is
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={confirmDelete}
-        title="Delete Post"
-        message="Are you sure you want to delete this post? This action cannot be undone."
-        confirmText="Delete"
+        title={t('post_card.delete_title')}
+        message={t('post_card.delete_confirm')}
+        confirmText={t('post_card.delete')}
         isDangerous={true}
       />
     </div>

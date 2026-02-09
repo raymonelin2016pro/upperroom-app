@@ -7,6 +7,9 @@ import CreatePost from './pages/CreatePost'
 import Profile from './pages/Profile'
 import PostDetail from './pages/PostDetail'
 import Icebreaker from './pages/Icebreaker'
+import GameLobby from './pages/GameLobby'
+import SpeedKing from './pages/SpeedKing'
+import MemoryMatch from './pages/MemoryMatch'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any>(null)
@@ -82,6 +85,30 @@ function App() {
             element={
               <PrivateRoute>
                 <Icebreaker />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/games"
+            element={
+              <PrivateRoute>
+                <GameLobby />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/speed-king"
+            element={
+              <PrivateRoute>
+                <SpeedKing />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/memory-match"
+            element={
+              <PrivateRoute>
+                <MemoryMatch />
               </PrivateRoute>
             }
           />

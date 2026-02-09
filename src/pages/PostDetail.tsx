@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import { ArrowLeft, Send } from 'lucide-react'
 import PostCard from '../components/PostCard'
@@ -16,6 +17,7 @@ interface Comment {
 }
 
 export default function PostDetail() {
+  const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
   const [post, setPost] = useState<any>(null)
@@ -153,13 +155,13 @@ export default function PostDetail() {
   if (!post) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-center px-4">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Post not found</h1>
-        <p className="text-gray-500 mb-6">The post you are looking for does not exist or has been removed.</p>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('post_detail.not_found')}</h1>
+        <p className="text-gray-500 mb-6">{t('post_detail.not_found_desc')}</p>
         <button 
           onClick={() => navigate('/')}
           className="px-6 py-2 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
         >
-          Go back home
+          {t('post_detail.go_home')}
         </button>
       </div>
     )
@@ -175,7 +177,7 @@ export default function PostDetail() {
         >
           <ArrowLeft className="h-6 w-6 text-gray-900" />
         </button>
-        <h1 className="text-xl font-bold text-gray-900">Post Details</h1>
+        <h1 className="text-xl font-bold text-gray-900">{t('post_detail.title')}</h1>
       </div>
 
       <div className="max-w-xl mx-auto">
@@ -188,12 +190,12 @@ export default function PostDetail() {
 
         {/* Comments Section */}
         <div className="mt-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-bold text-gray-900 mb-6">Comments ({comments.length})</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-6">{t('post_detail.comments')} ({comments.length})</h2>
 
           {/* Comment List */}
           <div className="space-y-6 mb-8">
             {comments.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No comments yet. Be the first to share your thoughts!</p>
+              <p className="text-gray-500 text-center py-4">{t('post_detail.no_comments')}</p>
             ) : (
               comments.map((comment) => (
                 <div key={comment.id} className="flex space-x-3">
@@ -215,7 +217,7 @@ export default function PostDetail() {
                   <div className="flex-1 bg-gray-50 rounded-2xl rounded-tl-none px-4 py-3">
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm font-bold text-gray-900">
-                        {comment.profiles?.username || 'Unknown User'}
+                        {comment.profiles?.username || t('post_card.unknown_user')}
                       </span>
                       <span className="text-xs text-gray-500">
                         {new Date(comment.created_at).toLocaleDateString()}
@@ -234,7 +236,7 @@ export default function PostDetail() {
               type="text"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Add a comment..."
+              placeholder={t('post_detail.add_comment')}
               className="w-full pl-4 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all"
               disabled={submittingComment}
             />

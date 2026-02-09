@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import { Plus, User, Sparkles } from 'lucide-react'
 import { POST_TAGS } from '../lib/utils'
 import PostCard from '../components/PostCard'
 import WeeklyTheme from '../components/WeeklyTheme'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 export default function Feed() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [posts, setPosts] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -82,12 +85,13 @@ export default function Feed() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-screen">
       {/* Header */}
       <div className="flex justify-between items-center mb-6 sticky top-0 bg-white/95 backdrop-blur-md z-20 py-4 border-b border-gray-50">
-        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 font-sans">Moment</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 font-sans">{t('feed.title')}</h1>
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <button 
-            onClick={() => navigate('/icebreaker')} 
+            onClick={() => navigate('/games')} 
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-            title="破冰抽卡"
+            title="趣味时刻"
           >
             <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 text-white flex items-center justify-center">
               <Sparkles className="h-4 w-4" />
@@ -117,7 +121,7 @@ export default function Feed() {
                 : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
             }`}
           >
-            All
+            {t('feed.all')}
           </button>
           {POST_TAGS.map((tag) => (
             <button
@@ -148,16 +152,16 @@ export default function Feed() {
             <Plus className="h-8 w-8 text-gray-300" />
           </div>
           <h3 className="text-xl font-bold text-gray-900 mb-2">
-            {selectedTag ? `No posts in #${selectedTag}` : 'No moments yet'}
+            {selectedTag ? t('feed.no_posts_in', { tag: selectedTag }) : t('feed.no_moments')}
           </h3>
           <p className="text-gray-500 mb-8 max-w-xs">
-            {selectedTag ? 'Try selecting another tag or create a new post.' : 'Be the first to share a photo with your friends.'}
+            {selectedTag ? t('feed.try_another') : t('feed.be_first')}
           </p>
           <button 
             onClick={() => navigate('/create')}
             className="px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl"
           >
-            Create Post
+            {t('feed.create_post')}
           </button>
         </div>
       ) : (

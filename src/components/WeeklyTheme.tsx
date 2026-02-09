@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import { Edit2, Send, X } from 'lucide-react'
 
@@ -9,6 +10,7 @@ interface WeeklyThemeData {
 }
 
 export default function WeeklyTheme() {
+  const { t } = useTranslation()
   const [theme, setTheme] = useState<WeeklyThemeData | null>(null)
   const [isAdmin, setIsAdmin] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
@@ -97,7 +99,7 @@ export default function WeeklyTheme() {
         <div className="relative bg-white bg-opacity-95 rounded-xl p-6 backdrop-blur-sm">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-xs font-bold uppercase tracking-wider text-indigo-500">
-              Weekly Verse / Theme
+              {t('weekly_theme.title')}
             </h2>
             {isAdmin && !isEditing && (
               <button
@@ -114,7 +116,7 @@ export default function WeeklyTheme() {
               <textarea
                 value={newTheme}
                 onChange={(e) => setNewTheme(e.target.value)}
-                placeholder="Enter this week's verse or theme..."
+                placeholder={t('weekly_theme.placeholder')}
                 className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-none text-gray-800"
                 rows={3}
                 autoFocus
@@ -124,20 +126,20 @@ export default function WeeklyTheme() {
                   onClick={() => setIsEditing(false)}
                   className="px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-100 rounded-lg transition-colors flex items-center gap-1"
                 >
-                  <X className="w-4 h-4" /> Cancel
+                  <X className="w-4 h-4" /> {t('weekly_theme.cancel')}
                 </button>
                 <button
                   onClick={handleSave}
                   className="px-3 py-1.5 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors flex items-center gap-1 shadow-sm"
                 >
-                  <Send className="w-4 h-4" /> Update
+                  <Send className="w-4 h-4" /> {t('weekly_theme.update')}
                 </button>
               </div>
             </div>
           ) : (
             <div className="prose prose-indigo max-w-none">
               <p className="text-lg md:text-xl font-medium text-gray-800 leading-relaxed font-serif italic text-center py-2">
-                "{theme?.content || 'No theme set for this week'}"
+                "{theme?.content || t('weekly_theme.no_theme')}"
               </p>
             </div>
           )}
