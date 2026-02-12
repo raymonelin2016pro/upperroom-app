@@ -10,6 +10,7 @@ import Icebreaker from './pages/Icebreaker'
 import GameLobby from './pages/GameLobby'
 import SpeedKing from './pages/SpeedKing'
 import MemoryMatch from './pages/MemoryMatch'
+import SpiritPersonalityTest from './pages/SpiritPersonalityTest'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any>(null)
@@ -109,6 +110,14 @@ function App() {
             element={
               <PrivateRoute>
                 <MemoryMatch />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/spirit-personality-test"
+            element={
+              <PrivateRoute>
+                <SpiritPersonalityTest />
               </PrivateRoute>
             }
           />

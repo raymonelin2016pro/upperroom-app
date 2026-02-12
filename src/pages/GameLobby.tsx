@@ -1,4 +1,4 @@
-import { ArrowLeft, Sparkles, Zap, Brain } from 'lucide-react';
+import { ArrowLeft, Sparkles, Zap, Brain, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -46,6 +46,16 @@ export default function GameLobby() {
       gradient: 'from-[#00b4db] to-[#0083b0]', // Cyan to blue
       active: true,
       shadowColor: 'shadow-cyan-500/30'
+    },
+    {
+      id: 'mbti',
+      name: '属灵性格测试',
+      desc: '探索你的 MBTI 与属灵恩赐',
+      icon: Heart,
+      path: '/spirit-personality-test',
+      gradient: 'from-[#ff9a9e] to-[#fad0c4]', // Pink/Peach
+      active: true,
+      shadowColor: 'shadow-pink-500/30'
     }
   ];
 
@@ -63,7 +73,7 @@ export default function GameLobby() {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 pt-8 pb-6 px-6 mb-8 text-center">
+      <header className="relative z-10 pt-8 pb-6 px-6 mb-2 text-center">
          <div className="flex items-center justify-center relative">
             <button 
                 onClick={() => navigate('/')} 

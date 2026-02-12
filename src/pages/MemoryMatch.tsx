@@ -4,15 +4,20 @@ import { ArrowLeft, Play, RotateCcw, Trophy } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Game Configuration
-const MAX_LEVELS = 7;
+const MAX_LEVELS = 12;
 const LEVEL_CONFIG = [
-  { level: 1, gridSize: 3, sequenceLength: 3, displayTime: 1000 },
-  { level: 2, gridSize: 3, sequenceLength: 4, displayTime: 900 },
-  { level: 3, gridSize: 4, sequenceLength: 4, displayTime: 800 },
-  { level: 4, gridSize: 4, sequenceLength: 5, displayTime: 700 },
-  { level: 5, gridSize: 5, sequenceLength: 5, displayTime: 600 },
-  { level: 6, gridSize: 5, sequenceLength: 6, displayTime: 500 },
-  { level: 7, gridSize: 5, sequenceLength: 7, displayTime: 400 },
+  { level: 1, cols: 3, rows: 3, sequenceLength: 3, displayTime: 1000 },
+  { level: 2, cols: 3, rows: 3, sequenceLength: 4, displayTime: 900 },
+  { level: 3, cols: 4, rows: 4, sequenceLength: 4, displayTime: 800 },
+  { level: 4, cols: 4, rows: 4, sequenceLength: 5, displayTime: 700 },
+  { level: 5, cols: 5, rows: 5, sequenceLength: 5, displayTime: 600 },
+  { level: 6, cols: 5, rows: 5, sequenceLength: 6, displayTime: 500 },
+  { level: 7, cols: 5, rows: 5, sequenceLength: 7, displayTime: 450 },
+  { level: 8, cols: 5, rows: 6, sequenceLength: 7, displayTime: 400 },
+  { level: 9, cols: 5, rows: 6, sequenceLength: 8, displayTime: 380 },
+  { level: 10, cols: 5, rows: 7, sequenceLength: 8, displayTime: 360 },
+  { level: 11, cols: 5, rows: 8, sequenceLength: 9, displayTime: 330 },
+  { level: 12, cols: 5, rows: 9, sequenceLength: 10, displayTime: 300 },
 ];
 
 type GameState = 'idle' | 'showing' | 'input' | 'success' | 'gameover' | 'completed';
@@ -46,8 +51,8 @@ export default function MemoryMatch() {
   };
 
   const generateSequence = (currentLevel: number) => {
-    const config = LEVEL_CONFIG[currentLevel - 1];
-    const totalCells = config.gridSize * config.gridSize;
+    const config = LEVEL_CONFIG[currentLevel - 1] || LEVEL_CONFIG[LEVEL_CONFIG.length - 1];
+    const totalCells = config.cols * config.rows;
     const newSequence: SequenceItem[] = [];
     const usedPositions = new Set<number>();
 
@@ -115,9 +120,8 @@ export default function MemoryMatch() {
           setGameState('success');
           setTimeout(() => {
             setLevel(l => l + 1);
-            startGame(false); // Start next level automatically? Or wait? Let's wait for user or auto. 
-            // User requirement: "Success enters next level". Let's do a short delay then next level.
-          }, 1000); // Wait 1s then next level logic actually happens in useEffect or just call function
+            startGame(false); 
+          }, 1000); 
         }
       }
     } else {
@@ -126,26 +130,9 @@ export default function MemoryMatch() {
     }
   };
   
-  // Effect to handle level transition after success state
-  useEffect(() => {
-    if (gameState === 'success') {
-      const timer = setTimeout(() => {
-        // Prepare next level
-        setGameState('showing');
-        setUserSequence([]);
-        generateSequence(level + 1);
-        setLevel(l => l + 1);
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [gameState]); // Careful with deps, we handle logic inside
-
-  // Refactor: simplify success transition
-  // Actually, I'll remove the useEffect and just use setTimeout in handleCellClick for simplicity and to avoid race conditions.
-  
   // Grid styles based on size
   const getGridClass = () => {
-    switch (currentConfig.gridSize) {
+    switch (currentConfig.cols) {
       case 3: return 'grid-cols-3';
       case 4: return 'grid-cols-4';
       case 5: return 'grid-cols-5';
@@ -182,7 +169,7 @@ export default function MemoryMatch() {
         </div>
 
         {/* Grid */}
-        <div className={`grid ${getGridClass()} gap-3 w-full aspect-square p-4 bg-white/40 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 relative overflow-hidden`}>
+        <div className={`grid ${getGridClass()} gap-3 w-full p-4 bg-white/40 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 relative overflow-hidden`}>
             
             {/* Game Over / Completed Overlay */}
             <AnimatePresence>
@@ -243,7 +230,7 @@ export default function MemoryMatch() {
             </AnimatePresence>
 
             {/* Cells */}
-            {Array.from({ length: currentConfig.gridSize * currentConfig.gridSize }).map((_, i) => {
+            {Array.from({ length: currentConfig.cols * currentConfig.rows }).map((_, i) => {
                // Determine cell state
                const isVisible = gameState === 'showing' && sequence.find(s => s.position === i)?.number === visibleNumber;
                const isCorrectlyClicked = userSequence.some(num => {
@@ -261,7 +248,7 @@ export default function MemoryMatch() {
                     onClick={() => handleCellClick(i)}
                     disabled={gameState !== 'input' || isCorrectlyClicked}
                     className={`
-                      relative rounded-xl transition-all duration-200
+                      relative rounded-xl transition-all duration-200 aspect-square
                       ${isCorrectlyClicked ? 'bg-indigo-500 shadow-inner' : 'bg-white shadow-sm hover:shadow-md active:scale-95'}
                       ${gameState === 'input' ? 'cursor-pointer' : 'cursor-default'}
                     `}
