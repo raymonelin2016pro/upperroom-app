@@ -13,10 +13,13 @@ interface SpiritualTreeProps {
 }
 
 export default function SpiritualTree({ initialPoints, lastCheckIn, onPointsUpdate }: SpiritualTreeProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [showScripture, setShowScripture] = useState(false);
-  const [currentScripture, setCurrentScripture] = useState<{ verse: string; reference: string } | null>(null);
+  const [currentScripture, setCurrentScripture] = useState<{ 
+    verse: { en: string; zh: string }; 
+    reference: { en: string; zh: string } 
+  } | null>(null);
   const [showInfo, setShowInfo] = useState(false);
 
   // Check if checked in today
@@ -39,7 +42,16 @@ export default function SpiritualTree({ initialPoints, lastCheckIn, onPointsUpda
   const progress = Math.min(100, (initialPoints / currentLevel.nextLevel) * 100);
 
   const handleCheckIn = async () => {
-    if (isCheckedInToday() || loading) return;
+    if (isCheckedInToday()) {
+      if (!currentScripture) {
+        const randomScripture = scriptures[Math.floor(Math.random() * scriptures.length)];
+        setCurrentScripture(randomScripture);
+      }
+      setShowScripture(true);
+      return;
+    }
+
+    if (loading) return;
 
     setLoading(true);
     
@@ -142,10 +154,10 @@ export default function SpiritualTree({ initialPoints, lastCheckIn, onPointsUpda
 
         <button
           onClick={handleCheckIn}
-          disabled={isCheckedInToday() || loading}
+          disabled={loading}
           className={`mt-6 flex items-center px-6 py-3 rounded-full font-bold shadow-md transition-all transform hover:scale-105 active:scale-95 ${
             isCheckedInToday() 
-              ? 'bg-emerald-200 text-emerald-700 cursor-default' 
+              ? 'bg-emerald-200 text-emerald-700 hover:bg-emerald-300' 
               : 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white hover:shadow-lg'
           }`}
         >
@@ -189,11 +201,11 @@ export default function SpiritualTree({ initialPoints, lastCheckIn, onPointsUpda
                 <h4 className="text-xl font-bold text-gray-900 mb-4">{t('spiritual_tree.daily_verse')}</h4>
                 
                 <p className="text-lg text-gray-700 italic mb-6 leading-relaxed">
-                  "{currentScripture.verse}"
+                  "{i18n.language.startsWith('zh') ? currentScripture.verse.zh : currentScripture.verse.en}"
                 </p>
                 
                 <p className="text-sm font-bold text-emerald-600 mb-8">
-                  — {currentScripture.reference}
+                  — {i18n.language.startsWith('zh') ? currentScripture.reference.zh : currentScripture.reference.en}
                 </p>
                 
                 <button
