@@ -22,11 +22,19 @@ export default function Login() {
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password
         })
         if (error) throw error
+
+        // Record login log
+        if (data.user) {
+          await supabase.from('login_logs').insert({
+            user_id: data.user.id
+          })
+        }
+
         await checkActivation()
       } else {
         const { error } = await supabase.auth.signUp({
