@@ -26,6 +26,7 @@
     "all": "All",
     "no_posts_in": "No posts in #{{tag}}",
     "no_moments": "No moments yet",
+    "empty_state": "It's empty here, come share your beautiful moments!",
     "try_another": "Try selecting another tag or create a new post.",
     "be_first": "Be the first to share a photo with your friends."
   },
@@ -72,5 +73,25 @@
     "share_first": "Share your first moment",
     "create_post": "Create Post",
     "default_user": "User"
+  },
+  "spiritual_tree": {
+    "title": "Spiritual Food Clicker",
+    "subtitle": "Daily Spiritual Growth",
+    "levels": {
+      "seed": "Seed",
+      "sprout": "Sprout",
+      "sapling": "Sapling",
+      "tree": "Tree",
+      "mighty_tree": "Mighty Tree"
+    },
+    "check_in": "Check In & Grow",
+    "checked_in": "Checked In",
+    "daily_verse": "Daily Bread",
+    "amen": "Amen 🙏",
+    "info": {
+      "title": "Grow your tree by:",
+      "daily_check_in": "📖 Daily Check-in (+10 pts)",
+      "create_post": "✍️ Creating Posts (+5 pts)"
+    }
   }
 }

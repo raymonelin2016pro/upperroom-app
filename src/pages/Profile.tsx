@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import { Home, LogOut, Camera, Edit2, X, Check } from 'lucide-react'
+import SpiritualTree from '../components/SpiritualTree'
 
 export default function Profile() {
   const { t } = useTranslation()
@@ -222,8 +223,19 @@ export default function Profile() {
             )}
         </div>
 
+        {/* Spiritual Tree Section */}
+        {profile && (
+          <SpiritualTree 
+            initialPoints={profile.growth_points || 0}
+            lastCheckIn={profile.last_check_in}
+            onPointsUpdate={(newPoints, newLastCheckIn) => 
+              setProfile({ ...profile, growth_points: newPoints, last_check_in: newLastCheckIn })
+            }
+          />
+        )}
+
         {/* My Posts Grid */}
-        <div className="border-t border-gray-100 pt-12">
+        <div className="border-t border-gray-100 pt-6">
           <div className="flex items-center justify-center mb-8">
             <h3 className="text-xs font-bold text-gray-900 uppercase tracking-widest border-b-2 border-black pb-1">
               {t('profile.my_posts')} <span className="text-gray-400 ml-1">{posts.length}</span>

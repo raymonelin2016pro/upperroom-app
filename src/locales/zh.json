@@ -26,6 +26,7 @@
     "all": "全部",
     "no_posts_in": "暂无 #{{tag}} 标签下的动态",
     "no_moments": "暂无动态",
+    "empty_state": "这里还空空的，快来分享你的美好瞬间吧！",
     "try_another": "试试选择其他标签或发布新动态。",
     "be_first": "成为第一个分享照片的人吧。"
   },
@@ -72,5 +73,25 @@
     "share_first": "分享你的第一个瞬间",
     "create_post": "发布动态",
     "default_user": "用户"
+  },
+  "spiritual_tree": {
+    "title": "灵粮点点点",
+    "subtitle": "每日属灵成长",
+    "levels": {
+      "seed": "种子",
+      "sprout": "嫩芽",
+      "sapling": "树苗",
+      "tree": "小树",
+      "mighty_tree": "参天大树"
+    },
+    "check_in": "签到 & 成长",
+    "checked_in": "已签到",
+    "daily_verse": "今日灵粮",
+    "amen": "阿们 🙏",
+    "info": {
+      "title": "如何让树成长：",
+      "daily_check_in": "📖 每日签到 (+10 分)",
+      "create_post": "✍️ 发布动态 (+5 分)"
+    }
   }
 }

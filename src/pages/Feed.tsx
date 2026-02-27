@@ -7,6 +7,7 @@ import { POST_TAGS } from '../lib/utils'
 import PostCard from '../components/PostCard'
 import WeeklyTheme from '../components/WeeklyTheme'
 import LanguageSwitcher from '../components/LanguageSwitcher'
+import Empty from '../components/Empty'
 
 export default function Feed() {
   const { t } = useTranslation()
@@ -147,23 +148,7 @@ export default function Feed() {
           ))}
         </div>
       ) : posts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-32 text-center">
-          <div className="h-24 w-24 bg-gray-50 rounded-full flex items-center justify-center mb-6">
-            <Plus className="h-8 w-8 text-gray-300" />
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">
-            {selectedTag ? t('feed.no_posts_in', { tag: selectedTag }) : t('feed.no_moments')}
-          </h3>
-          <p className="text-gray-500 mb-8 max-w-xs">
-            {selectedTag ? t('feed.try_another') : t('feed.be_first')}
-          </p>
-          <button 
-            onClick={() => navigate('/create')}
-            className="px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl"
-          >
-            {t('feed.create_post')}
-          </button>
-        </div>
+        <Empty message={t('feed.empty_state')} />
       ) : (
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 pb-24">
           {posts.map((post) => (

@@ -81,6 +81,25 @@ export default function CreatePost() {
 
       if (insertError) throw insertError
 
+      // 3. Increment growth points (Spiritual Tree)
+      try {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('growth_points')
+          .eq('id', user.id)
+          .single()
+        
+        const currentPoints = profile?.growth_points || 0
+        
+        await supabase
+          .from('profiles')
+          .update({ growth_points: currentPoints + 5 })
+          .eq('id', user.id)
+      } catch (err) {
+        console.error('Failed to update growth points:', err)
+        // Don't block navigation if points update fails
+      }
+
       navigate('/')
     } catch (e: any) {
       setErrorMsg(e.message)
