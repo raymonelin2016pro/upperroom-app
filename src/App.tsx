@@ -11,6 +11,7 @@ import GameLobby from './pages/GameLobby'
 import SpeedKing from './pages/SpeedKing'
 import MemoryMatch from './pages/MemoryMatch'
 import SpiritPersonalityTest from './pages/SpiritPersonalityTest'
+import GraceDrift from './pages/GraceDrift'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any>(null)
@@ -118,6 +119,14 @@ function App() {
             element={
               <PrivateRoute>
                 <SpiritPersonalityTest />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/grace-drift"
+            element={
+              <PrivateRoute>
+                <GraceDrift />
               </PrivateRoute>
             }
           />
