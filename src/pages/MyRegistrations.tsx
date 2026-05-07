@@ -20,6 +20,10 @@ type RegistrationRow = {
   } | null
 }
 
+type RawRegistrationRow = Omit<RegistrationRow, 'events'> & {
+  events: RegistrationRow['events'] | RegistrationRow['events'][]
+}
+
 export default function MyRegistrations() {
   const navigate = useNavigate()
   const [registrations, setRegistrations] = useState<RegistrationRow[]>([])
@@ -62,7 +66,12 @@ export default function MyRegistrations() {
         throw error
       }
 
-      setRegistrations((data as RegistrationRow[]) || [])
+      const rows = ((data as RawRegistrationRow[]) || []).map(item => ({
+        ...item,
+        events: Array.isArray(item.events) ? (item.events[0] || null) : item.events,
+      }))
+
+      setRegistrations(rows)
     } catch (error) {
       console.error('Error fetching registrations:', error)
     } finally {
