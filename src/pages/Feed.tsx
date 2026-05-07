@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
-import { Plus, User, Sparkles } from 'lucide-react'
+import { CalendarDays, Plus, User, Sparkles } from 'lucide-react'
 import { POST_TAGS } from '../lib/utils'
 import PostCard from '../components/PostCard'
 import WeeklyTheme from '../components/WeeklyTheme'
@@ -89,6 +89,15 @@ export default function Feed() {
         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 font-sans">{t('feed.title')}</h1>
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
+          <button
+            onClick={() => navigate('/events')}
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+            title="活动报名"
+          >
+            <div className="h-8 w-8 rounded-full bg-gradient-to-tr from-emerald-500 to-cyan-500 text-white flex items-center justify-center">
+              <CalendarDays className="h-4 w-4" />
+            </div>
+          </button>
           <button 
             onClick={() => navigate('/games')} 
             className="p-2 rounded-full hover:bg-gray-100 transition-colors"

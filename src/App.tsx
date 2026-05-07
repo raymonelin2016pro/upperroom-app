@@ -12,6 +12,13 @@ import SpeedKing from './pages/SpeedKing'
 import MemoryMatch from './pages/MemoryMatch'
 import SpiritPersonalityTest from './pages/SpiritPersonalityTest'
 import GraceDrift from './pages/GraceDrift'
+import Events from './pages/Events'
+import EventDetail from './pages/EventDetail'
+import EventRegister from './pages/EventRegister'
+import MyRegistrations from './pages/MyRegistrations'
+import AdminEvents from './pages/admin/AdminEvents'
+import AdminEventEditor from './pages/admin/AdminEventEditor'
+import AdminEventRegistrations from './pages/admin/AdminEventRegistrations'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<any>(null)
@@ -127,6 +134,70 @@ function App() {
             element={
               <PrivateRoute>
                 <GraceDrift />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/events"
+            element={
+              <PrivateRoute>
+                <Events />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/events/:slug"
+            element={
+              <PrivateRoute>
+                <EventDetail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/events/:slug/register"
+            element={
+              <PrivateRoute>
+                <EventRegister />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/my-events"
+            element={
+              <PrivateRoute>
+                <MyRegistrations />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/events"
+            element={
+              <PrivateRoute>
+                <AdminEvents />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/events/new"
+            element={
+              <PrivateRoute>
+                <AdminEventEditor />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/events/:eventId"
+            element={
+              <PrivateRoute>
+                <AdminEventEditor />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/events/:eventId/registrations"
+            element={
+              <PrivateRoute>
+                <AdminEventRegistrations />
               </PrivateRoute>
             }
           />

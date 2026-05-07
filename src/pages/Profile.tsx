@@ -10,6 +10,7 @@ export default function Profile() {
   const navigate = useNavigate()
   const [profile, setProfile] = useState<any>(null)
   const [posts, setPosts] = useState<any[]>([])
+  const [canManageEvents, setCanManageEvents] = useState(false)
   const [loading, setLoading] = useState(true)
   const [isEditing, setIsEditing] = useState(false)
   const [editUsername, setEditUsername] = useState('')
@@ -46,8 +47,14 @@ export default function Profile() {
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
+
+      const { count: organizerCount } = await supabase
+        .from('event_organizers')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id)
         
       setPosts(postsData || [])
+      setCanManageEvents(Boolean(profileData?.is_admin) || (organizerCount || 0) > 0)
     } catch (e) {
       console.error('Error fetching profile:', e)
     } finally {
@@ -221,6 +228,27 @@ export default function Profile() {
                 </button>
               </div>
             )}
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-4 mb-10">
+          <button
+            onClick={() => navigate('/my-events')}
+            className="rounded-3xl border border-slate-200 bg-white px-5 py-5 text-left hover:border-slate-300 hover:shadow-sm transition-all"
+          >
+            <div className="text-sm text-slate-400 mb-1">报名中心</div>
+            <div className="text-lg font-semibold text-slate-900">我的报名</div>
+            <div className="text-sm text-slate-500 mt-2">查看你已经提交的活动报名记录。</div>
+          </button>
+          {canManageEvents && (
+            <button
+              onClick={() => navigate('/admin/events')}
+              className="rounded-3xl border border-slate-200 bg-white px-5 py-5 text-left hover:border-slate-300 hover:shadow-sm transition-all"
+            >
+              <div className="text-sm text-slate-400 mb-1">组织者入口</div>
+              <div className="text-lg font-semibold text-slate-900">活动管理</div>
+              <div className="text-sm text-slate-500 mt-2">管理你负责的活动、查看报名数据。</div>
+            </button>
+          )}
         </div>
 
         {/* Spiritual Tree Section */}

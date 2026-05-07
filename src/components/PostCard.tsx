@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Heart, Trash2 } from 'lucide-react'
+import { Heart, Trash2, Image as ImageIcon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { supabase } from '../lib/supabase'
 import { useNavigate } from 'react-router-dom'
@@ -20,6 +20,7 @@ export default function PostCard({ post, onDelete, currentUserId: propUserId, is
   const [loading, setLoading] = useState(false)
   const [currentUserId, setCurrentUserId] = useState<string | null>(propUserId || null)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
 
   useEffect(() => {
     if (propUserId) {
@@ -155,12 +156,18 @@ export default function PostCard({ post, onDelete, currentUserId: propUserId, is
       onClick={handleCardClick}
       className="break-inside-avoid bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
     >
-      <div className="relative">
+      <div className="relative min-h-[200px] bg-gray-50">
+        {!isImageLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
+            <ImageIcon className="w-8 h-8 text-gray-300" />
+          </div>
+        )}
         <img 
           src={getImageUrl(post.image_url)} 
           alt={post.caption} 
-          className="w-full h-auto object-cover"
+          className={`w-full h-auto object-cover transition-opacity duration-500 ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
           loading="lazy"
+          onLoad={() => setIsImageLoaded(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
